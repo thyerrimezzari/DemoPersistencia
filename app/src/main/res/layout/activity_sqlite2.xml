@@ -32,4 +32,13 @@
         android:padding="8dp"
         android:text="SALVAR COM SQLITE"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        tools:listitem="@layout/user_rv_item"
+        android:layout_marginTop="8dp"
+        />
+
 </LinearLayout>
