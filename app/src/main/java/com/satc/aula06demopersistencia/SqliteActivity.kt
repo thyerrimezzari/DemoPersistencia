@@ -34,7 +34,7 @@ class SqliteActivity : AppCompatActivity() {
         etEmail = findViewById(R.id.et_email)
         btSave = findViewById(R.id.bt_save)
 
-        btSave.setOnClickListener(View.OnClickListener { save() })
+        btSave.setOnClickListener { save() }
 
         val recyclerView: RecyclerView = findViewById(R.id.rv_users)
 
@@ -52,20 +52,22 @@ class SqliteActivity : AppCompatActivity() {
             "SELECT id, name, email FROM usuarios", null
         )
 
-        if (cursor.moveToFirst()) {
-            val name = cursor.getString(with(cursor) { getColumnIndex("name") });
-            val email = cursor.getString(with(cursor) { getColumnIndex("email") });
+        with(cursor) {
+        // cada vez que esse while "girar" teremos o e-mail
+        // de um usuário de cada vez de todos encontrados na query
+            while (moveToNext()) {
+                val name = getString(getColumnIndex("name"));
+                val email = getString(getColumnIndex("email"));
 
-            var user = User()
-            user.name = name
-            user.email = email
+                var user = User()
+                user.name = name
+                user.email = email
 
-            userList.add(user)
-            userAdaper.notifyDataSetChanged()
+                userList.add(user)
+                userAdaper.notifyItemChanged(userList.size - 1)
+            }
         }
         cursor.close()
-
-
     }
 
     private fun save(){
